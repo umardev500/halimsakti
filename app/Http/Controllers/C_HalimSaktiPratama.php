@@ -211,7 +211,7 @@ class C_HalimSaktiPratama extends Controller
 
             $message->from($request->email);
 
-            $message->to("alfasauchiha261@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
+            $message->to("umar.dev500@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
         });
 
 

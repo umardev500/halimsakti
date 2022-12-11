@@ -172,6 +172,11 @@
                             <div class="form-field"><label for="email">Email</label><input type="text" name="email" id="email" value="" required="" /></div>
                             <div class="form-field"><label for="phone">Mobile Phone</label><input type="text" name="phone" id="phone" value="" required="" /></div>
                             <div class="form-field"><label for="message">Message</label><textarea type="text" name="message" id="message" rows="4" required=""></textarea></div>
+                            @if ($errors->has('g-recaptcha-response'))
+                            <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
+                                {{ $errors->first('g-recaptcha-response') }}
+                            </span>
+                            @endif
                             {!! NoCaptcha::renderJs() !!}
                             {!! NoCaptcha::display() !!}
                             <div class="form-button"><button type="submit">Submit</button></div>
