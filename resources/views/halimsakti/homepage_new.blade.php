@@ -146,8 +146,14 @@ use Illuminate\Support\Facades\Session;
                         <div class="form-brosur">
                             <form action="{{ route('ebrochuredatasave') }}" method="POST">
                                 @csrf
-                                <div class="form-field"><label for="name">Name</label><input type="text" name="name" id="name" value="" required="" /></div>
-                                <div class="form-field"><label for="email">Email</label><input type="text" name="email" id="email" value="" required="" /></div>
+                                <div class="form-field">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" value="name" required="" />
+                                </div>
+                                <div class="form-field">
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" id="email" value="umar.dev500@gmail.com" required="" />
+                                </div>
                                 @if(Session::has('captcha_error_brochure'))
                                 <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
                                     {{ Session::get('captcha_error_brochure') }}
