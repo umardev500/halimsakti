@@ -170,6 +170,8 @@
                             <div class="form-field"><label for="email">Email</label><input type="text" name="email" id="email" value="" required="" /></div>
                             <div class="form-field"><label for="phone">Mobile Phone</label><input type="text" name="phone" id="phone" value="" required="" /></div>
                             <div class="form-field"><label for="message">Message</label><textarea type="text" name="message" id="message" rows="4" required=""></textarea></div>
+                            {!! NoCaptcha::renderJs() !!}
+                            {!! NoCaptcha::display() !!}
                             <div class="form-button"><button type="submit">Submit</button></div>
                         </form>
                     </div>
