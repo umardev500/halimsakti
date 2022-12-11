@@ -1,0 +1,2 @@
+PHP VERSION : 8.0.0
+Laravel : 8
