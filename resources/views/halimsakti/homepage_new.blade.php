@@ -1,3 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\Session;
+?>
 @include('halimsakti.id.components.firstSlide')
 @include('halimsakti.id.components.secondSlide')
 @include('halimsakti.id.components.thirdSlide')
@@ -144,6 +148,11 @@
                                 @csrf
                                 <div class="form-field"><label for="name">Name</label><input type="text" name="name" id="name" value="" required="" /></div>
                                 <div class="form-field"><label for="email">Email</label><input type="text" name="email" id="email" value="" required="" /></div>
+                                @if(Session::has('captcha_error_brochure'))
+                                <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
+                                    {{ Session::get('captcha_error_brochure') }}
+                                </span>
+                                @endif
                                 {!! NoCaptcha::renderJs() !!}
                                 {!! NoCaptcha::display() !!}
                                 <div class="d-flex justify-content-center align-items-center" style="max-width:400px">
@@ -233,6 +242,12 @@
 <script src="{{ asset('js/Swiper/swiper.js') }}"></script>
 <script src="{{ asset('js/my-custom.js') }}"></script>
 <script src="{{ asset('js/slider-timer.js') }}"></script>
+<script>
+    const err = '<?= Session::get('captcha_error_contact') ?? Session::get('captcha_error_brochure') ?>'
+    if (err != '') {
+        alert(err);
+    }
+</script>
 <script>
     $(document).ready(function() {
         $('.the-slider').slick({

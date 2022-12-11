@@ -252,7 +252,7 @@ class C_HalimSaktiPratama extends Controller
             $captErr = isset($errs['g-recaptcha-response']) ? $errs['g-recaptcha-response'] : null;
 
             if ($captErr != null) {
-                return Redirect::back()->with(['captcha_error_contact' => 'Please verify that you are not a robot dawg.']);
+                return Redirect::back()->with(['captcha_error_contact' => 'Please verify that you are not a robot.']);
             }
         }
 
@@ -261,6 +261,15 @@ class C_HalimSaktiPratama extends Controller
 
     public function ebrochuredatasave(request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
+
+        if ($validator->fails()) {
+            echo 'failed';
+            return Redirect::back()->with(['captcha_error_brochure' => 'Please verify that you are not a robot']);
+        }
+
         Ebrochuredata::create([
             'name' => $request->name,
             'email' => $request->email,

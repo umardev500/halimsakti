@@ -1,3 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\Session;
+?>
 @include('halimsakti.en.components.firstSlide')
 @include('halimsakti.en.components.secondSlide')
 @include('halimsakti.en.components.thirdSlide')
@@ -195,6 +199,11 @@
                                     <label for="email">Email</label>
                                     <input type="text" name="email" id="email" value="umar.dev500@gmail.com" required="" />
                                 </div>
+                                @if(Session::has('captcha_error_brochure'))
+                                <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
+                                    {{ Session::get('captcha_error_brochure') }}
+                                </span>
+                                @endif
                                 {!! NoCaptcha::renderJs() !!}
                                 {!! NoCaptcha::display() !!}
                                 <div class="d-flex justify-content-center align-items-center" style="max-width:400px">
@@ -284,6 +293,12 @@
 <script src="{{ asset('js/Swiper/swiper.js') }}"></script>
 <script src="{{ asset('js/my-custom.js') }}"></script>
 <script src="{{ asset('js/slider-timer.js') }}"></script>
+<script>
+    const err = '<?= Session::get('captcha_error_contact') ?? Session::get('captcha_error_brochure') ?>'
+    if (err != '') {
+        alert(err);
+    }
+</script>
 <script>
     $(document).ready(function() {
         // New and Info slider
