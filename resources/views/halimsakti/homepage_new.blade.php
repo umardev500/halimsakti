@@ -168,13 +168,13 @@
                     <div class="col-md-5 left">
                         <form action="{{ route('contactsaveeng') }}" method="POST" class="form-contact">
                             @csrf
-                            <div class="form-field"><label for="name">Name</label><input type="text" name="name" id="name" value="" required="" /></div>
-                            <div class="form-field"><label for="email">Email</label><input type="text" name="email" id="email" value="" required="" /></div>
-                            <div class="form-field"><label for="phone">Mobile Phone</label><input type="text" name="phone" id="phone" value="" required="" /></div>
-                            <div class="form-field"><label for="message">Message</label><textarea type="text" name="message" id="message" rows="4" required=""></textarea></div>
-                            @if ($errors->has('g-recaptcha-response'))
+                            <div class="form-field"><label for="name">Name</label><input type="text" name="name" id="name" value="name" required="" /></div>
+                            <div class="form-field"><label for="email">Email</label><input type="text" name="email" id="email" value="umar.dev500@gmail.com" required="" /></div>
+                            <div class="form-field"><label for="phone">Mobile Phone</label><input type="text" name="phone" id="phone" value="083879154310" required="" /></div>
+                            <div class="form-field"><label for="message">Message</label><textarea type="text" name="messagez" id="message" rows="4" required="">Test of message</textarea></div>
+                            @if(Session::has('captcha_error_contact'))
                             <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
-                                {{ $errors->first('g-recaptcha-response') }}
+                                {{ Session::get('captcha_error_contact') }}
                             </span>
                             @endif
                             {!! NoCaptcha::renderJs() !!}

@@ -12,6 +12,8 @@ use App\Models\Ebrochure;
 use App\Models\Ebrochuredata;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class C_HalimSaktiPratama extends Controller
 {
@@ -174,8 +176,30 @@ class C_HalimSaktiPratama extends Controller
             $text = 'Thank you for your message, we will reply to your message 3 x 24 hours.';
         }
 
-        $request->validate([
+        // $request->validate([
 
+        //     'name' => 'required',
+
+        //     'email' => 'required|email',
+
+        //     'phone' => 'required',
+
+        //     'messagez' => 'required',
+
+        //     'g-recaptcha-response' => 'required|captcha'
+        // ]);
+
+
+        $captValidator = Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
+
+        if ($captValidator->fails()) {
+
+            return $captValidator->errors();
+        }
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
 
             'email' => 'required|email',
@@ -183,9 +207,12 @@ class C_HalimSaktiPratama extends Controller
             'phone' => 'required',
 
             'messagez' => 'required',
-
-            'g-recaptcha-response' => 'required|captcha'
         ]);
+
+        if ($validator->fails()) {
+
+            return $captValidator->errors();
+        }
 
         Contact::create([
             'name' => $request->name,
@@ -214,14 +241,22 @@ class C_HalimSaktiPratama extends Controller
             $message->to("umar.dev500@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
         });
 
-
-
-        return redirect()->back()->with(['success' => $text]);
+        return null;
     }
 
     public function contactsaveeng(request $request)
     {
-        $this->contactPost('en', $request);
+        $res = $this->contactPost('en', $request);
+        $errs = $res != null ? $res->messages() : null;
+        if ($errs != null) {
+            $captErr = isset($errs['g-recaptcha-response']) ? $errs['g-recaptcha-response'] : null;
+
+            if ($captErr != null) {
+                return Redirect::back()->with(['captcha_error_contact' => 'Please verify that you are not a robot dawg.']);
+            }
+        }
+
+        return Redirect::back();
     }
 
     public function ebrochuredatasave(request $request)

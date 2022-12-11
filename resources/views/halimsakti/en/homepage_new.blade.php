@@ -223,9 +223,9 @@
                             <div class="form-field"><label for="email">Email</label><input type="text" name="email" id="email" value="umar.dev500@gmail.com" required="" /></div>
                             <div class="form-field"><label for="phone">Mobile Phone</label><input type="text" name="phone" id="phone" value="083879154310" required="" /></div>
                             <div class="form-field"><label for="message">Message</label><textarea type="text" name="messagez" id="message" rows="4" required="">Test of message</textarea></div>
-                            @if ($errors->has('g-recaptcha-response'))
+                            @if(Session::has('captcha_error_contact'))
                             <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
-                                {{ $errors->first('g-recaptcha-response') }}
+                                {{ Session::get('captcha_error_contact') }}
                             </span>
                             @endif
                             {!! NoCaptcha::renderJs() !!}
