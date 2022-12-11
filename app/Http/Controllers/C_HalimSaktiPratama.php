@@ -11,7 +11,7 @@ use App\Models\News;
 use App\Models\Ebrochure;
 use App\Models\Ebrochuredata;
 use App\Models\Contact;
-
+use Illuminate\Support\Facades\Mail;
 
 class C_HalimSaktiPratama extends Controller
 {
@@ -163,53 +163,16 @@ class C_HalimSaktiPratama extends Controller
 
     public function contactsave(request $request)
     {
-        Contact::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'message' => $request->messagez,
-        ]);
-
-        $request->validate([
-
-            'name' => 'required',
-
-            'email' => 'required|email',
-
-            'phone' => 'required',
-
-            'messagez' => 'required',
-
-        ]);
-
-        $input = $request->all();
-
-        //  Send mail to admin
-
-        \Mail::send('emails/halimsakti', array(
-
-            'name' => $input['name'],
-
-            'email' => $input['email'],
-
-            'phone' => $input['phone'],
-
-            'messagez' => $input['messagez'],
-
-        ), function ($message) use ($request) {
-
-            $message->from($request->email);
-
-            $message->to("alfasauchiha261@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
-        });
-
-
-
-        return redirect()->back()->with(['success' => 'Terima kasih atas pesan anda, kami akan membalas pesan anda 3 x 24 jam.']);
+        $this->contactPost('id', $request);
     }
 
-    public function contactsaveeng(request $request)
+    // post contact
+    public function contactPost($language, Request $request)
     {
+        $text = 'Terima kasih atas pesan anda, kami akan membalas pesan anda 3 x 24 jam.';
+        if ($language == 'en') {
+            $text = 'Thank you for your message, we will reply to your message 3 x 24 hours.';
+        }
 
         $request->validate([
 
@@ -231,15 +194,10 @@ class C_HalimSaktiPratama extends Controller
             'message' => $request->messagez,
         ]);
 
-        // $request->validate([
-        //     'g-recaptcha-response' => 'required|captcha'
-        // ]);
-
         $input = $request->all();
 
         //  Send mail to admin
-
-        \Mail::send('emails/halimsakti', array(
+        Mail::send('emails/halimsakti', array(
 
             'name' => $input['name'],
 
@@ -258,7 +216,12 @@ class C_HalimSaktiPratama extends Controller
 
 
 
-        return redirect()->back()->with(['success' => 'Thank you for your message, we will reply to your message 3 x 24 hours.']);
+        return redirect()->back()->with(['success' => $text]);
+    }
+
+    public function contactsaveeng(request $request)
+    {
+        $this->contactPost('en', $request);
     }
 
     public function ebrochuredatasave(request $request)
