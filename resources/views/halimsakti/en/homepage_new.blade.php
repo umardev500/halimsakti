@@ -189,6 +189,8 @@
                                 @csrf
                                 <div class="form-field"><label for="name">Name</label><input type="text" name="name" id="name" value="" required="" /></div>
                                 <div class="form-field"><label for="email">Email</label><input type="text" name="email" id="email" value="" required="" /></div>
+                                {!! NoCaptcha::renderJs() !!}
+                                {!! NoCaptcha::display() !!}
                                 <div class="d-flex justify-content-center align-items-center" style="max-width:400px">
                                     @foreach($ebrochure as $e)
                                     <button><svg style="position: relative; right: 3px; bottom: 2px;" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
