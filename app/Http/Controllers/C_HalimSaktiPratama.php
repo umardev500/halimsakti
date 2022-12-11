@@ -184,25 +184,24 @@ class C_HalimSaktiPratama extends Controller
 
         $input = $request->all();
 
-           //  Send mail to admin
+        //  Send mail to admin
 
         \Mail::send('emails/halimsakti', array(
 
-          'name' => $input['name'],
+            'name' => $input['name'],
 
-          'email' => $input['email'],
+            'email' => $input['email'],
 
-          'phone' => $input['phone'],
+            'phone' => $input['phone'],
 
-          'messagez' => $input['messagez'],
+            'messagez' => $input['messagez'],
 
-      ), function($message) use ($request){
+        ), function ($message) use ($request) {
 
-          $message->from($request->email);
+            $message->from($request->email);
 
-          $message->to("alfasauchiha261@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
-
-      });
+            $message->to("alfasauchiha261@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
+        });
 
 
 
@@ -211,12 +210,6 @@ class C_HalimSaktiPratama extends Controller
 
     public function contactsaveeng(request $request)
     {
-        Contact::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'message' => $request->messagez,
-        ]);
 
         $request->validate([
 
@@ -228,29 +221,40 @@ class C_HalimSaktiPratama extends Controller
 
             'messagez' => 'required',
 
+            'g-recaptcha-response' => 'required|captcha'
         ]);
+
+        Contact::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->messagez,
+        ]);
+
+        // $request->validate([
+        //     'g-recaptcha-response' => 'required|captcha'
+        // ]);
 
         $input = $request->all();
 
-           //  Send mail to admin
+        //  Send mail to admin
 
         \Mail::send('emails/halimsakti', array(
 
-          'name' => $input['name'],
+            'name' => $input['name'],
 
-          'email' => $input['email'],
+            'email' => $input['email'],
 
-          'phone' => $input['phone'],
+            'phone' => $input['phone'],
 
-          'messagez' => $input['messagez'],
+            'messagez' => $input['messagez'],
 
-      ), function($message) use ($request){
+        ), function ($message) use ($request) {
 
-          $message->from($request->email);
+            $message->from($request->email);
 
-          $message->to("alfasauchiha261@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
-
-      });
+            $message->to("alfasauchiha261@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
+        });
 
 
 
