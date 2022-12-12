@@ -35,6 +35,7 @@ window.addEventListener("load", function () {
             const userType = searchInput.value.toLowerCase();
 
             let counter = 0;
+            const limitHiglight = 29;
 
             for (let i = 0; i < data.length; i++) {
                 const desc = removeAllChar(data[i].description);
@@ -58,10 +59,20 @@ window.addEventListener("load", function () {
                         .substring(descIndex, descIndex + 50)
                         .substring(userType.length);
 
-                    const textHigliht = desc.substring(
+                    let textHigliht = desc.substring(
                         descIndex,
                         descIndex + userType.length
                     );
+
+                    if (textHigliht.length > limitHiglight) {
+                        const start = textHigliht.length - limitHiglight;
+                        const hiText = textHigliht
+                            .slice(start)
+                            .split(" ")
+                            .slice(1)
+                            .join(" ");
+                        textHigliht = hiText;
+                    }
 
                     const highlight = document.createElement("span");
                     highlight.innerText = textHigliht;
@@ -91,7 +102,7 @@ window.addEventListener("load", function () {
             }
 
             if (userType == "") {
-                suggestionView.innerHTML = ""
+                suggestionView.innerHTML = "";
             }
         });
     });
