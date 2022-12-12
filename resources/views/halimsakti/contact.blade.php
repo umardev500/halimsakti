@@ -1,3 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\Session;
+?>
 @extends('layouts.appHalim')
 @section('title', 'Contact')
 @section('css')
@@ -91,6 +95,9 @@
 @section('script')
 <script src="{{ asset('js/Swiper/swiper.js') }}"></script>
 <script>
+    const success = "<?= Session::get('success') ?>";
+    if (success != '') alter(success);
+
     $(document).ready(function() {
         $("select").change(function() {
             $(this).find("option:selected").each(function() {

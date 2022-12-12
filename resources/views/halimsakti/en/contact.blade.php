@@ -1,3 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\Session;
+?>
 @extends('layouts.appHalimEn')
 @section('title', 'Contact')
 @section('css')
@@ -113,6 +117,9 @@
 </div>
 
 <script>
+    const success = "<?= Session::get('success') ?>";
+    if (success != '') alter(success);
+
     $(document).ready(function() {
         $("select").change(function() {
             $(this).find("option:selected").each(function() {
