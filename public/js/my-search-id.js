@@ -22,6 +22,12 @@ window.addEventListener("load", function () {
         }
     }
 
+    function removeAllChar(source) {
+        let replaced = source.replace(/(<([^>]+)>)/gi, " ").trim();
+        replaced = replaced.replace(/[:,)\.(/-]/gi, " ").replace(/\s+/gi, " ");
+        return replaced;
+    }
+
     fetchProduct().then(function (data) {
         searchInput.addEventListener("input", function (e) {
             suggestionView.innerHTML = "";
@@ -31,7 +37,7 @@ window.addEventListener("load", function () {
             let counter = 0;
 
             for (let i = 0; i < data.length; i++) {
-                const desc = data[i].description_sub;
+                const desc = removeAllChar(data[i].description);
                 const nameId = data[i].product_nama
                     .toLowerCase()
                     .indexOf(userType);

@@ -15,11 +15,18 @@ window.addEventListener("load", function () {
             });
 
             const data = await responses.json();
+            console.log(data);
             return data;
         } catch (err) {
             console.log(err);
             return err;
         }
+    }
+
+    function removeAllChar(source) {
+        let replaced = source.replace(/(<([^>]+)>)/gi, " ").trim();
+        replaced = replaced.replace(/[:,)\.(/-]/gi, " ").replace(/\s+/gi, " ");
+        return replaced;
     }
 
     fetchProduct().then(function (data) {
@@ -31,7 +38,7 @@ window.addEventListener("load", function () {
             let counter = 0;
 
             for (let i = 0; i < data.length; i++) {
-                const desc = data[i].description_sub_eng;
+                const desc = removeAllChar(data[i].description_eng);
                 const nameEng = data[i].product_nama_eng
                     .toLowerCase()
                     .indexOf(userType);
@@ -85,7 +92,7 @@ window.addEventListener("load", function () {
             }
 
             if (userType == "") {
-                suggestionView.innerHTML = ""
+                suggestionView.innerHTML = "";
             }
         });
     });
