@@ -21,21 +21,18 @@
         <div class="wrapper">
             <h1 class="head-title">News &amp; Info</h1>
             <div class="news-feature">
-                <a href="{{ route('newsdetail_en' , $news1->news_nama_eng_slug ) }}" class="div1 featured"
-                    style="background:url({{ asset('image/news'. '/' . $news1->image) }}) no-repeat center center / cover; text-decoration: none;">
+                <a href="{{ route('newsdetail_en' , $news1->news_nama_eng_slug ) }}" class="div1 featured" style="background:url({{ asset('image/news'. '/' . $news1->image) }}) no-repeat center center / cover; text-decoration: none;">
                     <h2>{{ $news1->news_nama_eng }}</h2>
                     <p>{!! $news1->description_sub_eng !!}</p>
                 </a>
                 @foreach($news2 as $n2)
-                <a href="{{ route('newsdetail_en' , $n2->news_nama_eng_slug ) }}" class="div2 featured"
-                    style="background:url({{ asset('image/news'. '/' . $n2->image) }}) no-repeat center center / contain; text-decoration: none;">
+                <a href="{{ route('newsdetail_en' , $n2->news_nama_eng_slug ) }}" class="div2 featured" style="background:url({{ asset('image/news'. '/' . $n2->image) }}) no-repeat center center / contain; text-decoration: none;">
                     <h2>{{ $n2->news_nama_eng }}</h2>
                     <p>{!! $n2->description_sub_eng !!}</p>
                 </a>
                 @endforeach
                 @foreach($news3 as $n3)
-                <a href="{{ route('newsdetail_en' , $n3->news_nama_eng_slug )  }}" class="div3 featured"
-                    style="background:url({{ asset('image/news'. '/' . $n3->image) }}) no-repeat center center / contain; text-decoration: none;">
+                <a href="{{ route('newsdetail_en' , $n3->news_nama_eng_slug )  }}" class="div3 featured" style="background:url({{ asset('image/news'. '/' . $n3->image) }}) no-repeat center center / contain; text-decoration: none;">
                     <h2>{{ $n3->news_nama_eng }}</h2>
                     <p>{!! $n3->description_sub_eng !!}</p>
                 </a>
@@ -71,15 +68,17 @@
                         <form action="{{ route('ebrochuredatasave') }}" method="POST">
                             @csrf
                             <div class="form-brosur">
-                                <div class="form-field"><label for="name">Name</label><input type="text" name="name"
-                                        id="name" value="" required /></div>
-                                <div class="form-field"><label for="email">Email</label><input type="email" name="email"
-                                        id="email" value="" required /></div>
+                                <div class="form-field"><label for="name">Name</label><input type="text" name="name" id="name" value="" required /></div>
+                                <div class="form-field"><label for="email">Email</label><input type="email" name="email" id="email" value="" required /></div>
+                                @if(Session::has('captcha_error_brochure'))
+                                <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
+                                    {{ Session::get('captcha_error_brochure') }}
+                                </span>
+                                @endif
+                                {!! NoCaptcha::renderJs() !!}
+                                {!! NoCaptcha::display() !!}
                                 @foreach($ebrochure as $e)
-                                <button><svg style="position: relative; right: 3px; bottom: 2px;" stroke="currentColor"
-                                        fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
-                                        stroke-linejoin="round" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                <button><svg style="position: relative; right: 3px; bottom: 2px;" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                         <polyline points="7 10 12 15 17 10"></polyline>
                                         <line x1="12" y1="15" x2="12" y2="3"></line>
