@@ -334,6 +334,7 @@
     /* background-color: tomato; */
     position: relative;
     align-items: center;
+    margin-bottom: 0 !important;
 }
 
 .my-btn-search {
