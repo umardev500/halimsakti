@@ -165,7 +165,17 @@ class C_HalimSaktiPratama extends Controller
 
     public function contactsave(request $request)
     {
-        $this->contactPost('id', $request);
+        $res = $this->contactPost('id', $request);
+        $errs = $res != null ? $res->messages() : null;
+        if ($errs != null) {
+            $captErr = isset($errs['g-recaptcha-response']) ? $errs['g-recaptcha-response'] : null;
+
+            if ($captErr != null) {
+                return Redirect::back()->with(['captcha_error_contact' => 'Please verify that you are not a robot.']);
+            }
+        }
+
+        return Redirect::back()->with(['success' => 'Messange sent']);
     }
 
     // post contact
@@ -238,7 +248,7 @@ class C_HalimSaktiPratama extends Controller
 
             $message->from($request->email);
 
-            $message->to("umar.dev500@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
+            $message->to("alfasauchiha261@gmail.com", "Halim Sakti Website")->subject($request->get('name'));
         });
 
         return null;
@@ -256,7 +266,7 @@ class C_HalimSaktiPratama extends Controller
             }
         }
 
-        return Redirect::back();
+        return Redirect::back()->with(['success' => 'Messange sent']);
     }
 
     public function ebrochuredatasave(request $request)

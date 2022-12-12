@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 </a>
 @endsection
 @section('lang')
+
 <div class="lang-item"><a href="{{ route('contact') }}" style="text-decoration: none; color:black;">ID</a></div>
 <div class="lang-item"><a href="{{ route('contact_en') }}" style="text-decoration: none; color:black;">EN</a></div>
 @endsection
@@ -23,28 +24,34 @@ use Illuminate\Support\Facades\Session;
         <div id="contact-us">
             <div class="wrapper">
                 <h1 class="section-title">Kontak Kami</h1>
-                @if(Session::has('success'))
 
-                <div class="alert alert-success" id="success-alert">
-
-                    {{ Session::get('success') }}
-
-                    @php
-
-                    Session::forget('success');
-
-                    @endphp
-
-                </div>
-                @endif
                 <div class="row">
                     <div class="col-md-5 left">
                         <form action="{{ route('contactsave') }}" method="POST" class="form-contact">
                             @csrf
-                            <div class="form-field"><label for="name">Name</label><input type="text" name="name" id="name" value="" required="" /></div>
-                            <div class="form-field"><label for="email">Email</label><input type="email" name="email" id="email" value="" required="" /></div>
-                            <div class="form-field"><label for="phone">Mobile Phone</label><input type="number" name="phone" id="phone" value="" required="" /></div>
-                            <div class="form-field"><label for="message">Message</label><textarea type="text" name="messagez" id="message" rows="4" required=""></textarea></div>
+                            <div class="form-field">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" value="name" required="" />
+                            </div>
+                            <div class="form-field">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" value="email@gmail.com" required="" />
+                            </div>
+                            <div class="form-field">
+                                <label for="phone">Mobile Phone</label>
+                                <input type="number" name="phone" id="phone" value="0827628732323" required="" />
+                            </div>
+                            <div class="form-field">
+                                <label for="message">Message</label>
+                                <textarea type="text" name="messagez" id="message" rows="4" required="">message text here</textarea>
+                            </div>
+                            @if(Session::has('captcha_error_contact'))
+                            <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
+                                {{ Session::get('captcha_error_contact') }}
+                            </span>
+                            @endif
+                            {!! NoCaptcha::renderJs() !!}
+                            {!! NoCaptcha::display() !!}
                             <div class="form-button"><button type="submit">Submit</button></div>
                         </form>
                     </div>
@@ -96,8 +103,9 @@ use Illuminate\Support\Facades\Session;
 <script src="{{ asset('js/Swiper/swiper.js') }}"></script>
 <script>
     const success = "<?= Session::get('success') ?>";
-    if (success != '') alter(success);
-
+    if (success != '') alert(success);
+</script>
+<script>
     $(document).ready(function() {
         $("select").change(function() {
             $(this).find("option:selected").each(function() {

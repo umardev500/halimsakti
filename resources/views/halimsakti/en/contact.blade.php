@@ -24,24 +24,6 @@ use Illuminate\Support\Facades\Session;
         <div id="contact-us">
             <div class="wrapper">
                 <h1 class="section-title">Contact Us</h1>
-                @if(Session::has('success'))
-
-                <div class="alert alert-success fade show" id="success-alert">
-
-                    {{ Session::get('success') }}
-
-                    @php
-
-                    Session::forget('success');
-
-                    @endphp
-
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-
-                </div>
-                @endif
                 <div class="row">
                     <div class="col-md-5 left">
                         <form action="{{ route('contactsaveeng') }}" method="POST" class="form-contact">
@@ -62,9 +44,9 @@ use Illuminate\Support\Facades\Session;
                                 <label for="message">Message</label>
                                 <textarea type="text" name="messagez" id="message" rows="4" required="">message text here</textarea>
                             </div>
-                            @if ($errors->has('g-recaptcha-response'))
+                            @if(Session::has('captcha_error_contact'))
                             <span style="margin-bottom: 8px;display: flex;color: #ef4444;">
-                                {{ $errors->first('g-recaptcha-response') }}
+                                {{ Session::get('captcha_error_contact') }}
                             </span>
                             @endif
                             {!! NoCaptcha::renderJs() !!}
@@ -117,9 +99,6 @@ use Illuminate\Support\Facades\Session;
 </div>
 
 <script>
-    const success = "<?= Session::get('success') ?>";
-    if (success != '') alter(success);
-
     $(document).ready(function() {
         $("select").change(function() {
             $(this).find("option:selected").each(function() {
@@ -138,6 +117,10 @@ use Illuminate\Support\Facades\Session;
 
 @section('script')
 <script src="{{ asset('js/Swiper/swiper.js') }}"></script>
+<script>
+    const success = "<?= Session::get('success') ?>";
+    if (success != '') alert(success);
+</script>
 <script>
     $(document).ready(function() {
         $("select").change(function() {

@@ -1,3 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\Session;
+?>
 @extends('layouts.appHalimEn')
 @section('title', 'News')
 @section('css')
@@ -93,3 +97,9 @@
     </div>
 </div>
 @endsection
+<script>
+    const err = '<?= Session::get('captcha_error_contact') ?? Session::get('captcha_error_brochure') ?>'
+    if (err != '') {
+        alert(err);
+    }
+</script>
